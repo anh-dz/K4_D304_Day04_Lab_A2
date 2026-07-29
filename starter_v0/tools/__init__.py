@@ -18,6 +18,7 @@ from .social_search.tool import search_tweets
 from .send.tool import send_telegram
 from .lookup.tool import web_search
 from .calculator.tool import evaluate_expression
+from .handle_lookup.tool import resolve_handle
 
 
 # NOTE (starter_v0): tool names here are intentionally vague. These keys are the
@@ -37,6 +38,7 @@ TOOL_FUNCTIONS = {
     "papers": arxiv_search,
     "paper_text": get_arxiv_paper_text,
     "calculator": evaluate_expression,
+    "handle_lookup": resolve_handle,
 }
 
 

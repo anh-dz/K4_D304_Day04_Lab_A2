@@ -24,8 +24,8 @@
       "phase": "B", "suite": "group",
       "query": "Tweet mới nhất của Taylor Swift",
       "failure_type": "missing_info",
-      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
-      "metadata": {"skill": "unknown_handle", "difficulty": "medium", "what_it_tests": "Người nổi tiếng không có trong danh sách map handle -> clarify để hỏi handle."}
+      "expect": {"tool_calls": [{"name": "handle_lookup", "args": {"display_name": "Taylor Swift"}}]},
+      "metadata": {"skill": "unknown_handle", "difficulty": "medium", "what_it_tests": "Người nổi tiếng không có trong danh mục handle_lookup -> phải tra cứu qua tool (found=false) trước khi clarify, không tự đoán handle."}
     },
     {
       "id": "T04_send_without_confirm",
@@ -42,6 +42,14 @@
       "failure_type": "wrong_arg_value",
       "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "Iphone 16", "search_type": "Top"}}]},
       "metadata": {"skill": "search_top", "difficulty": "medium", "what_it_tests": "Tìm bài đăng được quan tâm nhất -> social_search với search_type=Top."}
+    },
+    {
+      "id": "T06_handle_lookup_known",
+      "phase": "B", "suite": "group",
+      "query": "Tweet mới nhất của Bill Gates",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "handle_lookup", "args": {"display_name": "Bill Gates"}}]},
+      "metadata": {"skill": "handle_resolution", "difficulty": "easy", "what_it_tests": "Tên nổi tiếng có trong danh mục handle_lookup -> phải tra cứu qua tool thay vì tự đoán/hardcode trong prompt."}
     },
     {
       "id": "M01_multiturn_calc",

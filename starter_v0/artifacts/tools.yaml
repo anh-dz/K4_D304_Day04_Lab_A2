@@ -116,3 +116,11 @@ tools:
       properties:
         expression: {type: string, description: "Biểu thức số, ví dụ '0.15 * 25000', 'math.sqrt(144)' hoặc 'math.pi * 5**2'."}
       required: [expression]
+
+  - name: handle_lookup
+    description: "Tra cứu handle Twitter chính xác từ tên hiển thị của một người, dùng danh mục nội bộ đã biết. PHẢI dùng công cụ này trước khi gọi timeline, thay vì tự đoán handle. Nếu found=false thì phải dùng clarify để hỏi lại."
+    parameters:
+      type: object
+      properties:
+        display_name: {type: string, default: "", description: "Tên hiển thị đầy đủ, ví dụ 'Bill Gates'."}
+      required: [display_name]

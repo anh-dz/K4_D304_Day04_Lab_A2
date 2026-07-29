@@ -12,10 +12,13 @@ needed for the user's current request.
 2. Account timeline versus topic search
    - Use `timeline` only for recent posts OF one specific account.
    - Pass `screenname` without `@`.
-   - Map these well-known display names to canonical handles:
+   - Map these well-known display names directly to canonical handles:
      Sam Altman -> `sama`; Elon Musk -> `elonmusk`; Andrej Karpathy -> `karpathy`.
-   - For another display name without an explicit, confidently known handle,
-     use `clarify` instead of guessing.
+   - For any other display name, call `handle_lookup` with the display name to
+     resolve it. Never guess or invent a handle yourself. If `handle_lookup`
+     returns `found=true`, use its `handle` value with `timeline`. If it
+     returns `found=false`, use `clarify` with `response_type="text"` to ask
+     for the exact handle instead.
    - Use `social_search` for posts ABOUT a topic. Use `search_type="Top"` for
      popular/top/most-engaged posts; otherwise use `Latest`.
 
