@@ -20,6 +20,7 @@ from .lookup.tool import web_search
 from .calculator.tool import evaluate_expression
 from .handle_lookup.tool import resolve_handle
 from .weather.tool import get_weather
+from .wiki_search.tool import wiki_search
 
 
 # NOTE (starter_v0): tool names here are intentionally vague. These keys are the
@@ -41,6 +42,7 @@ TOOL_FUNCTIONS = {
     "calculator": evaluate_expression,
     "handle_lookup": resolve_handle,
     "weather": get_weather,
+    "wiki_search": wiki_search,
 }
 
 

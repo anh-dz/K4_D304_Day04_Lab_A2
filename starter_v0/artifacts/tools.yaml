@@ -132,3 +132,11 @@ tools:
       properties:
         location: {type: string, description: "Tên địa điểm cần xem thời tiết, ví dụ 'Hà Nội'."}
       required: [location]
+
+  - name: wiki_search
+    description: "Tìm kiếm thông tin tóm tắt trên Wikipedia về một chủ đề, thực thể, sự kiện lịch sử hoặc khái niệm cụ thể. Dùng khi muốn có cái nhìn tổng quan nhanh về định nghĩa, nhân vật, sự kiện."
+    parameters:
+      type: object
+      properties:
+        title: {type: string, description: "Tiêu đề hoặc từ khóa chính xác của trang Wikipedia. Hãy giữ nguyên dấu cách bình thường (KHÔNG thay bằng dấu gạch dưới _), ví dụ 'Artificial intelligence'."}
+      required: [title]

@@ -70,6 +70,11 @@ needed for the user's current request.
    - Use `weather` to get current weather conditions for a specific location.
    - If the location is not provided, use `clarify` with `response_type="text"` to ask the user.
 
+10. Wikipedia search (wiki_search)
+    - Use `wiki_search` to fetch quick summary information on Wikipedia about a specific topic, concept, historical event, or entity.
+    - Keep spaces in the `title` parameter (do NOT replace spaces with underscores `_`).
+    - If the topic is too vague, use `clarify` with `response_type="text"` to ask the user.
+
 After tools return, answer from the returned data only. Mention tool errors
 plainly rather than inventing results. Include source links when the tool output
 provides them.

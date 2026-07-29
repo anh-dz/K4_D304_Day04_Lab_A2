@@ -128,6 +128,26 @@
       "failure_type": "missing_info",
       "expect": {"tool_calls": [{"name": "weather", "args": {"location": "New York"}}]},
       "metadata": {"skill": "multiturn_weather", "difficulty": "medium", "what_it_tests": "Hỏi thời tiết cần phải hỏi lại địa điểm nếu thiếu."}
+    },
+    {
+      "id": "T08_wiki_search_basic",
+      "phase": "B", "suite": "group",
+      "query": "Tra cứu Wikipedia về mạng neural nhân tạo (Artificial neural network) xem sao",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "wiki_search", "args": {"title": "Artificial neural network"}}]},
+      "metadata": {"skill": "wiki_search_basic", "difficulty": "easy", "what_it_tests": "Tra cứu định nghĩa khái niệm trên Wikipedia."}
+    },
+    {
+      "id": "M07_multiturn_wiki_search",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm định nghĩa của mạng neural nhân tạo trên Wikipedia giúp mình"},
+        {"role": "assistant", "content": "Bạn muốn tìm chính xác trang nào?"},
+        {"role": "user", "content": "Không, ý mình là Python (programming language) cơ"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "wiki_search", "args": {"title": "Python (programming language)"}}]},
+      "metadata": {"skill": "multiturn_wiki_search", "difficulty": "medium", "what_it_tests": "Người dùng thay đổi chủ đề Wikipedia cần tra cứu ở lượt sau."}
     }
   ]
 }
