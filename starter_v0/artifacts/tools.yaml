@@ -110,9 +110,9 @@ tools:
       required: [arxiv_url]
 
   - name: calculator
-    description: "Thực hiện tính toán biểu thức toán học. Dùng khi người dùng hỏi các câu tính toán."
+    description: "Tính an toàn một biểu thức SỐ CỤ THỂ đã có đủ dữ kiện. Dùng cho số học, phần trăm (đổi thành số thập phân), và các hàm/hằng số được hỗ trợ như math.sqrt, math.sin, math.pi. Không dùng cho tích phân ký hiệu, chứng minh, giải phương trình, yêu cầu viết code hoặc bài toán thiếu số liệu."
     parameters:
       type: object
       properties:
-        expression: {type: string, description: "Chuỗi chứa biểu thức cần tính (vd: '2+2*3')."}
+        expression: {type: string, description: "Biểu thức số, ví dụ '0.15 * 25000', 'math.sqrt(144)' hoặc 'math.pi * 5**2'."}
       required: [expression]

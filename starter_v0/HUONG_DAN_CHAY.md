@@ -1,60 +1,100 @@
-# Tổng kết công việc & Hướng dẫn sử dụng (Day 04 Lab v2)
+# Hướng dẫn hoàn thiện và chạy Day 04 Lab v2
 
-## 1. Những gì mình đã làm để hoàn thành Lab
+Project đã có UI, team eval và tool `calculator`, nhưng evidence chỉ hoàn thành
+khi các lệnh provider/eval/live chat chạy thật. Không tự điền metric, hash hoặc
+transcript trước khi có file JSON tương ứng.
 
-Mình đã hoàn thiện toàn bộ mã nguồn và cấu hình theo đúng chuẩn yêu cầu của Lab Day 04, bao gồm:
+## 1. Chuẩn bị trên Windows
 
-- **Tạo mới Tool `calculator`**: 
-  - Đã thêm tool này vào `tools/calculator/tool.py` (tính toán an toàn với Python `math`).
-  - Đã đăng ký nó vào `tools/__init__.py` và `artifacts/tools.yaml`.
-- **Viết 10 Team Eval Cases**: 
-  - Hoàn thành đầy đủ 5 cases hội thoại đơn (single-turn) và 5 cases đa lượt (multi-turn) trong file `data/eval_group.json`. Các case này test rất đa dạng kỹ năng (thử logic đổi tool, clarify lại URL, hỏi xác nhận trước khi đăng bài,...).
-- **Tối ưu hóa Prompts & Tool declarations (Phiên bản v3)**: 
-  - Sửa đổi `artifacts/system_prompt.md` cực kỳ chặt chẽ: Yêu cầu AI luôn dùng `clarify` (không được tự đoán bừa) nếu thiếu dữ kiện và bắt buộc hỏi yes/no trước hành động nhạy cảm như gửi tin nhắn.
-  - Sửa đổi `artifacts/tools.yaml` giúp AI hiểu rõ các ranh giới và cách nhận diện từ khóa "hôm nay", "tuần này" hoặc tìm kiếm "phổ biến".
-- **Xây dựng UI Chatbot (Streamlit)**: 
-  - Đã lập trình file `app.py` với giao diện web, tích hợp đầy đủ lịch sử chat và chức năng theo dõi "Tool Trace" (để xem log các arguments mà AI truyền vào tool).
-- **Dự thảo Report & Version Log**: 
-  - Khung báo cáo nộp bài `artifacts/REPORT.md` và file log `artifacts/version_log.csv` đã được tạo sẵn để bạn điền số liệu.
+Chạy trong Command Prompt hoặc PowerShell tại `starter_v0/`:
 
----
-
-## 2. Hướng dẫn chạy sản phẩm
-
-Bạn hãy thực hiện tuần tự các bước dưới đây để chạy thử:
-
-### Bước 1: Khai báo API Key
-App cần có API Key để mô hình ngôn ngữ (Gemini, OpenRouter, v.v.) hoạt động. 
-1. Tại thư mục `starter_v0`, tạo một file mới tên là `.env` (nếu chưa có). Bạn có thể copy từ `.env.example`.
-2. Mở file `.env` lên và điền Key vào. Ví dụ nếu bạn dùng Gemini:
-   ```text
-   GEMINI_API_KEY=AIzaSy...dán_key_của_bạn_vào_đây...
-   ```
-   *(Lưu ý: Không dùng ngoặc kép bao quanh key)*
-
-### Bước 2: Khởi chạy giao diện Chat (UI)
-1. Mở Terminal tại thư mục `starter_v0`.
-2. Chạy lệnh kích hoạt môi trường ảo (nếu bạn cài packages vào venv):
-   ```bash
-   source venv/bin/activate
-   ```
-3. Khởi động Streamlit:
-   ```bash
-   streamlit run app.py
-   ```
-4. Trình duyệt sẽ tự động mở trang `http://localhost:8501`. Tại đây, bạn có thể gõ câu hỏi (Ví dụ: *"Tính giúp tôi 15% của 800"* hoặc *"Hôm nay AI có gì mới?"*) để test khả năng phản hồi và xem Tool Trace của Agent.
-
-### Bước 3: Chạy Evaluation tự động (Để lấy file JSON Log chấm điểm)
-Trong quá trình nộp bài, bạn bắt buộc phải có log của các eval cases. Hãy mở một tab Terminal mới và chạy các lệnh sau (Đảm bảo đã khai báo API Key):
-
-**Chạy Base Eval (v0):**
-```bash
-python run_eval.py --provider gemini --version v0 --suite base --eval-cases data/eval_base.json
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe scripts\preflight_provider.py --provider openrouter
 ```
 
-**Chạy Group Eval (10 cases nhóm tự viết - v3):**
-```bash
-python run_eval.py --provider gemini --version v3 --suite group --eval-cases data/eval_group.json
+Nếu dùng provider khác, thay `openrouter` bằng `gemini`, `openai` hoặc
+`anthropic` trong tất cả lệnh. API key nằm trong `.env`; không commit, chụp màn
+hình hoặc đưa file này vào bài nộp.
+
+## 2. Smoke-test tool mới
+
+```powershell
+.\.venv\Scripts\python.exe -c "from tools import TOOL_FUNCTIONS as T; print(T['calculator']('math.sqrt(144)')); print(T['calculator']('math.pi * 5**2'))"
 ```
 
-Kết quả chấm (pass/fail) sẽ in ra ở Terminal và log JSON đầy đủ được lưu trong thư mục `runs/`. Bạn hãy lấy điểm số `accuracy` từ màn hình console này điền vào file `version_log.csv` và `REPORT.md` để nộp bài nhé!
+Hai kết quả phải không có lỗi và lần lượt xấp xỉ `12` và `78.539816`.
+
+## 3. Chạy UI
+
+```powershell
+.\.venv\Scripts\python.exe -m streamlit run app.py
+```
+
+Mở `http://localhost:8501`. Kiểm tra tối thiểu:
+
+1. Một request research bình thường.
+2. Một request thiếu thông tin rồi bổ sung ở lượt kế tiếp.
+3. Một request gửi/post cần xác nhận yes/no.
+4. Một phép tính dùng `calculator`.
+
+UI tự lưu mỗi cuộc trò chuyện vào `transcripts/*.transcript.json`. Tab **Tool
+trace** hiển thị từng round/call/result; tab **So sánh eval** chỉ đọc các run JSON
+thật đã có trong `runs/`.
+
+## 4. Quy trình eval bắt buộc
+
+Không chạy bốn version liên tiếp trên cùng một `system_prompt.md` và
+`tools.yaml`. Trước mỗi version phải có một hypothesis và một thay đổi artifact
+thật; run JSON sẽ ghi hash để kiểm tra việc này.
+
+### v0 — baseline
+
+Dùng prompt và tool declarations nguyên bản của starter:
+
+```powershell
+.\.venv\Scripts\python.exe run_eval.py --provider openrouter --version v0 --suite base --eval-cases data/eval_base.json
+```
+
+### v1 — sửa hypothesis thứ nhất
+
+Đọc failure của v0, sửa một vấn đề trong `artifacts/system_prompt.md` hoặc
+`artifacts/tools.yaml`, rồi chạy:
+
+```powershell
+.\.venv\Scripts\python.exe run_eval.py --provider openrouter --version v1 --suite base --eval-cases data/eval_base.json
+```
+
+### v2 — sửa hypothesis thứ hai
+
+```powershell
+.\.venv\Scripts\python.exe run_eval.py --provider openrouter --version v2 --suite base --eval-cases data/eval_base.json
+```
+
+### v3 — artifact cuối có calculator
+
+```powershell
+.\.venv\Scripts\python.exe run_eval.py --provider openrouter --version v3 --suite base --eval-cases data/eval_base.json
+.\.venv\Scripts\python.exe run_eval.py --provider openrouter --version v3 --suite group --eval-cases data/eval_group.json
+```
+
+Một run dùng làm evidence phải có:
+
+```text
+provider_error_cases = 0
+measured_cases = total_cases
+```
+
+Routing PASS không chứng minh tool execution thành công. Phải kiểm tra thủ công
+mọi `tool_results[*].result.error` trong run JSON.
+
+## 5. Hoàn thiện file nộp
+
+Sau khi có run thật:
+
+- Điền đúng hash, hypothesis, metric trước/sau và tên run vào
+  `artifacts/version_log.csv`.
+- Thay toàn bộ placeholder trong `artifacts/REPORT.md` bằng evidence từ
+  `runs/*.json` và `transcripts/*.transcript.json`.
+- Kiểm tra đủ base `v0`, `v1`, `v2`, `v3` và group `v3`.
+- Không nộp `.env`, `.venv/`, cache hoặc secret.

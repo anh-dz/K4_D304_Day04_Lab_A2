@@ -1,15 +1,31 @@
 ---
 name: calculator
-description: "Thực hiện tính toán biểu thức toán học."
+track: core
+kind: local_formatter
+provider: Python standard library
+requires_env: []
+inputs: [expression]
+outputs: [expression, result, error]
+side_effect: false
 ---
+# calculator
 
-# Calculator Tool
+Safely evaluates a finite numeric expression locally. It never evaluates Python
+code, imports modules, reads files, or accesses the network.
 
-Dùng tool này khi người dùng yêu cầu tính toán một phép toán. Truyền biểu thức toán học vào dưới dạng chuỗi (ví dụ: `2 + 2 * 3` hoặc `math.sqrt(16)`). Không dùng cho các câu hỏi logic hay phương trình phức tạp nằm ngoài khả năng của hàm eval cơ bản.
+Use it for arithmetic with known numeric inputs, percentages converted to a
+decimal expression, and approved functions/constants from Python's `math`
+namespace. Examples:
 
-## Khi nào dùng
-- Khi người dùng hỏi kết quả của phép toán cơ bản hoặc hàm trong thư viện `math`.
-- Ví dụ: "15% của 200 là bao nhiêu?", "tính sin(pi/4)".
+- `0.15 * 25000`
+- `math.sqrt(144)`
+- `math.pi * 5**2`
+- `sin(pi / 4)`
+
+Do not use it for symbolic algebra, indefinite integrals, proofs, equation
+solving, programming requests, or expressions with missing numeric inputs.
 
 ## Argument
-- `expression`: Chuỗi chứa biểu thức cần tính.
+
+- `expression`: a numeric expression using `+`, `-`, `*`, `/`, `//`, `%`, `**`,
+  parentheses, approved math functions, and the constants `pi`, `e`, and `tau`.
