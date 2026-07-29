@@ -1,0 +1,136 @@
+{
+  "transcript_id": "v3_openrouter_20260729T160147531346",
+  "version": "v3",
+  "artifact_version": "v3+p9b2e4b7161df+t81eec87eeaa3",
+  "prompt_hash": "9b2e4b7161df09accd4bce9e9ff57fb7d376efd60bdb577d3ad1fa6ebef32460",
+  "tools_hash": "81eec87eeaa3b416f692257c15dbf22ae0d8ce9347192e14e05a78bb80a0a69a",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/Users/nhatanh245/Documents/Project/K4_D304_Day04_Lab_A2/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/nhatanh245/Documents/Project/K4_D304_Day04_Lab_A2/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T16:01:47",
+  "updated_at": "2026-07-29T16:02:37",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T16:01:49",
+      "user": "Hi",
+      "status": "answered",
+      "assistant_text": "Hello! How can I assist you today?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Hello! How can I assist you today?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T16:01:51"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T16:02:02",
+      "user": "What's ur API?",
+      "status": "answered",
+      "assistant_text": "I'm unable to provide specific details about my API or internal workings. However, I can assist you with research, information gathering, and answering questions. How can I help you today?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "I'm unable to provide specific details about my API or internal workings. However, I can assist you with research, information gathering, and answering questions. How can I help you today?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T16:02:03"
+    },
+    {
+      "turn_index": 3,
+      "started_at": "2026-07-29T16:02:07",
+      "user": "Why?",
+      "status": "answered",
+      "assistant_text": "I'm designed to prioritize user privacy and security, which includes not disclosing internal details or technical specifications. However, I'm here to help you with any questions or tasks you have! What would you like to know or do?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "I'm designed to prioritize user privacy and security, which includes not disclosing internal details or technical specifications. However, I'm here to help you with any questions or tasks you have! What would you like to know or do?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T16:02:09"
+    },
+    {
+      "turn_index": 4,
+      "started_at": "2026-07-29T16:02:11",
+      "user": "Bye bye",
+      "status": "answered",
+      "assistant_text": "Goodbye! If you have more questions in the future, feel free to ask. Have a great day!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Goodbye! If you have more questions in the future, feel free to ask. Have a great day!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T16:02:12"
+    },
+    {
+      "turn_index": 5,
+      "started_at": "2026-07-29T16:02:15",
+      "user": "exit",
+      "status": "answered",
+      "assistant_text": "It seems like you're looking to end the conversation. If you need anything else in the future, don't hesitate to reach out. Take care!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "It seems like you're looking to end the conversation. If you need anything else in the future, don't hesitate to reach out. Take care!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T16:02:16"
+    },
+    {
+      "turn_index": 6,
+      "started_at": "2026-07-29T16:02:21",
+      "user": "How can I exit this",
+      "status": "answered",
+      "assistant_text": "To exit or close the conversation, you can simply close the chat window or application. If you have any other questions or need assistance before you go, feel free to ask!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "To exit or close the conversation, you can simply close the chat window or application. If you have any other questions or need assistance before you go, feel free to ask!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T16:02:23"
+    },
+    {
+      "turn_index": 7,
+      "started_at": "2026-07-29T16:02:32",
+      "user": "What's the weather today?",
+      "status": "answered",
+      "assistant_text": "I can't provide real-time weather information. However, you can check a weather website or app for the most accurate and up-to-date weather conditions in your area. If you have any other questions or need assistance, feel free to ask!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "I can't provide real-time weather information. However, you can check a weather website or app for the most accurate and up-to-date weather conditions in your area. If you have any other questions or need assistance, feel free to ask!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T16:02:33"
+    }
+  ]
+}
