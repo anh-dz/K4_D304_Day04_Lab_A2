@@ -84,7 +84,7 @@ if user_text:
                 st.session_state.history.append({"role": "assistant", "content": assistant_text})
                 
                 if events:
-                    with st.expander("🛠️ Tool Trace", expanded=False):
+                    with st.expander("Tool Trace", expanded=False):
                         for event in events:
                             st.write(f"**Tool:** `{event['tool']}`")
                             st.json(event["args"])
