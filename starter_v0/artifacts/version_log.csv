@@ -1,1 +1,5 @@
 version,author,changed_artifact,artifact_version,prompt_hash,tools_hash,reason,hypothesis,metric_name,metric_before,metric_after,run_file
+v0,Team,none,,,,,Baseline run,tool_routing_accuracy,0.0,,runs/v0_run.json
+v1,Team,system_prompt.md,,,,,Sửa lỗi tự đoán URL,ask_user_accuracy,0.0,,runs/v1_run.json
+v2,Team,tools.yaml,,,,,Đòi yes_no khi send,confirm_boundary,0.0,,runs/v2_run.json
+v3,Team,both,,,,,Thêm Calculator tool,overall_accuracy,0.0,,runs/v3_run.json

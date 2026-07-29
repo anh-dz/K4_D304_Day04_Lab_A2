@@ -1,7 +1,105 @@
 {
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "10 eval cases (5 single, 5 multi-turn) của nhóm.",
+  "cases": [
+    {
+      "id": "T01_calc_basic",
+      "phase": "B", "suite": "group",
+      "query": "Tính giúp mình 15% của 25000 là bao nhiêu?",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "calculator", "args": {"expression": "0.15 * 25000"}}]},
+      "metadata": {"skill": "math_basic", "difficulty": "easy", "what_it_tests": "Dùng calculator để tính phần trăm."}
+    },
+    {
+      "id": "T02_calc_math_func",
+      "phase": "B", "suite": "group",
+      "query": "Tính căn bậc hai của 144",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "calculator", "args": {"expression": "math.sqrt(144)"}}]},
+      "metadata": {"skill": "math_func", "difficulty": "easy", "what_it_tests": "Dùng calculator với hàm math.sqrt."}
+    },
+    {
+      "id": "T03_timeline_wrong_name",
+      "phase": "B", "suite": "group",
+      "query": "Tweet mới nhất của Taylor Swift",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "metadata": {"skill": "unknown_handle", "difficulty": "medium", "what_it_tests": "Người nổi tiếng không có trong danh sách map handle -> clarify để hỏi handle."}
+    },
+    {
+      "id": "T04_send_without_confirm",
+      "phase": "B", "suite": "group",
+      "query": "Đăng tin nhắn 'Xin chào thế giới' lên nhóm giúp mình.",
+      "failure_type": "wrong_boundary",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "yes_no"}}]},
+      "metadata": {"skill": "confirm_send", "difficulty": "medium", "what_it_tests": "Hành động đăng bài -> clarify yes_no trước khi gọi send."}
+    },
+    {
+      "id": "T05_search_topic_top",
+      "phase": "B", "suite": "group",
+      "query": "Tìm những bài đăng được quan tâm nhất về Iphone 16 trên mạng xã hội",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "Iphone 16", "search_type": "Top"}}]},
+      "metadata": {"skill": "search_top", "difficulty": "medium", "what_it_tests": "Tìm bài đăng được quan tâm nhất -> social_search với search_type=Top."}
+    },
+    {
+      "id": "M01_multiturn_calc",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tính giúp mình diện tích hình tròn"},
+        {"role": "user", "content": "Bán kính là 5 nhé"},
+        {"role": "user", "content": "Dùng số pi trong hàm math luôn"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "calculator", "args": {"expression": "math.pi * 5**2"}}]},
+      "metadata": {"skill": "multiturn_calc", "difficulty": "hard", "what_it_tests": "Carry over thông tin để tính diện tích hình tròn r=5."}
+    },
+    {
+      "id": "M02_multiturn_send",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Mình muốn đăng thông báo: Hôm nay nghỉ họp"},
+        {"role": "assistant", "content": "Bạn có chắc chắn muốn đăng thông báo này không?"},
+        {"role": "user", "content": "Có, gửi đi"}
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {"tool_calls": [{"name": "send", "args": {"text": "Hôm nay nghỉ họp", "confirmed": true}}]},
+      "metadata": {"skill": "multiturn_confirmed_send", "difficulty": "hard", "what_it_tests": "Đã có xác nhận 'Có' ở turn trước -> tiến hành gọi send với confirmed=true."}
+    },
+    {
+      "id": "M03_multiturn_lookup_time",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tìm tin về giá vàng giúp mình"},
+        {"role": "user", "content": "Chỉ lấy tin hôm nay thôi nhé"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "giá vàng", "topic": "news", "timeframe": "day"}}]},
+      "metadata": {"skill": "multiturn_lookup", "difficulty": "medium", "what_it_tests": "Cập nhật timeframe=day sau khi user cung cấp thêm thông tin."}
+    },
+    {
+      "id": "M04_multiturn_change_mind",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Xem Sam Altman vừa tweet gì"},
+        {"role": "user", "content": "Thôi khoan, lấy của Andrej Karpathy đi"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "karpathy"}}]},
+      "metadata": {"skill": "multiturn_change_mind", "difficulty": "hard", "what_it_tests": "Đổi handle từ Sam Altman sang Andrej Karpathy."}
+    },
+    {
+      "id": "M05_multiturn_clarify_url",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt link này giúp mình"},
+        {"role": "assistant", "content": "Bạn hãy cung cấp link cụ thể nhé."},
+        {"role": "user", "content": "https://github.com"}
+      ],
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "fetch", "args": {"url": "https://github.com"}}]},
+      "metadata": {"skill": "multiturn_url", "difficulty": "medium", "what_it_tests": "Fetch url sau khi user cung cấp."}
+    }
+  ]
 }

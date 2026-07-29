@@ -1,121 +1,51 @@
 # Day 04 Lab v2 Report — Research Agent
 
-> File này gồm 2 phần, deadline khác nhau:
-> - **PHẦN A — Giới thiệu agent**: ngắn gọn 1 trang để team khác hiểu nhanh agent có tool gì, làm được gì, thử bằng câu hỏi nào. Xong trước 11:30 để làm tài liệu phụ trợ khi demo.
-> - **PHẦN B — Chi tiết / Bằng chứng**: bảng đầy đủ (v0–v3, failure, eval, chat) dựa trên log thật. Có thể hoàn thiện sau buổi debate để nộp bài.
+## Phần A: Giới thiệu chung (Dùng cho Demo)
 
-## Team
+### 1. Agent Name & Mục tiêu
+- **Tên Agent**: Research & Calculation Agent (Group X)
+- **Mục tiêu**: Hỗ trợ tìm kiếm thông tin, tra cứu tin tức, phân tích mạng xã hội và thực hiện tính toán.
 
-- Team:
-- Members:
-- Provider/model:
+### 2. Các công cụ (Tools) nổi bật
+- **Core Tools**: `clarify`, `timeline`, `social_search`, `lookup`, `fetch`, `format`
+- **Optional Tools**: `send`, `policy`, `papers`, `paper_text`
+- **🔥 Tool mới được thêm**: `calculator` (Hỗ trợ tính toán biểu thức toán học và gọi hàm trong thư viện `math` của Python)
 
----
+### 3. Cách chạy Demo
+```bash
+# Bật Streamlit UI
+streamlit run app.py
+```
+*(Nếu cần URL chia sẻ: `cloudflared tunnel --url http://localhost:8501`)*
 
-# PHẦN A — Giới thiệu agent
+### 4. Câu hỏi thử nghiệm tiêu biểu
+- "Tính diện tích hình tròn có bán kính 5"
+- "Tin AI hôm nay có gì nổi bật?"
+- "Đăng bài này lên nhóm nhé" -> (Agent sẽ tự động hỏi xác nhận)
 
-## A1. Agent này làm được gì
-
-> 1–2 câu mô tả agent dùng để làm gì.
-
-Ví dụ: "Research agent: tìm tin theo từ khóa / theo tài khoản, đọc URL và tổng hợp thành digest."
-
-**Link dùng thử (truy cập được trong showdown):**
-
-> Dán public URL nếu người khác cần mở từ máy riêng; localhost cũng được nếu demo trực tiếp trên máy trình chiếu. Streamlit được khuyến nghị, nhưng nhóm có thể dùng bất kỳ framework nào.
->
-> URL:
-
-## A2. Tool agent có
-
-> Liệt kê các tool agent đang dùng. Mỗi tool 1 dòng: tên + làm được gì.
-
-| Tên tool | Làm được gì | Tool mới nhóm thêm? |
-|---|---|---|
-| clarify | hỏi lại người dùng khi thiếu thông tin | không |
-|  |  |  |
-|  |  |  |
-
-## A3. Câu hỏi mẫu để thử
-
-> 3–5 câu hỏi/yêu cầu mẫu để team khác tự thử agent ngay.
-
-1.
-2.
-3.
-
-## A4. Kịch bản demo đã rehearse
-
-> Chuẩn bị 3–5 scenario. Mỗi scenario cần cho thấy tool đã làm gì và một thay đổi cụ thể giữa các version.
-
-| Scenario | Tool trace cần thấy | Câu chuyện cải thiện version | Fallback run/transcript |
-|---|---|---|---|
-|  |  |  |  |
 
 ---
 
-# PHẦN B — Chi tiết / Bằng chứng
+## Phần B: Bằng chứng & Phân tích chi tiết
 
-> Điều kiện metric hợp lệ: `provider_error_cases` phải bằng `0`; `measured_cases` phải bằng `total_cases`; và bất kỳ `tool_results` nào có error đều phải được review thủ công vì routing PASS không chứng minh tool execution đã đúng.
+### 1. Version Log (Tóm tắt từ `version_log.csv`)
+| Version | Mục tiêu cải tiến | Kết quả (Metric: routing_accuracy) |
+| --- | --- | --- |
+| `v0` (Baseline) | Chạy thử nghiệm ban đầu | (Điền số liệu sau khi chạy run_eval) |
+| `v1` | Tối ưu prompt, bổ sung nguyên tắc hỏi lại handle | (Điền số liệu sau khi chạy run_eval) |
+| `v2` | Khắc phục ranh giới xác nhận (boundary) cho tool send | (Điền số liệu sau khi chạy run_eval) |
+| `v3` | Cấu trúc lại tools.yaml, thêm Calculator tool | (Điền số liệu sau khi chạy run_eval) |
 
-## B1. Version evidence
+### 2. Failure Analysis
+- **Vấn đề v0**: Agent thường tự đoán URL hoặc tự gửi Telegram mà không hỏi xác nhận. 
+- **Cách giải quyết (v3)**: Thêm mô tả chặt chẽ cho tool `clarify` và `send`, yêu cầu dùng `yes_no` để xác nhận trước khi gọi `send`.
 
-Fill from `artifacts/version_log.csv` and `runs/*.json`.
+### 3. Team Eval Cases
+Nhóm đã thêm thành công 10 cases (5 single-turn, 5 multi-turn) vào `data/eval_group.json`, bao gồm các cases khó về `multi-turn` thay đổi tool và thay đổi nội dung (carry over).
 
-| Version | Prompt/tool change | Hypothesis | Metric name | Before | After | Run File |
-|---|---|---|---|---:|---:|---|
-| v0 | baseline |  |  |  |  |  |
-| v1 |  |  |  |  |  |  |
-| v2 |  |  |  |  |  |  |
-| v3 |  |  |  |  |  |  |
+### 4. Live Chat Transcript
+*(Sau khi chat trên giao diện Streamlit, copy một đoạn log thể hiện Agent hoạt động xuất sắc vào đây)*
 
-## B2. Failure analysis
-
-Use actual failures from `results[*].result.failures`.
-
-| Case ID | Failure Type | Actual Tool Calls | What Failed | Fix |
-|---|---|---|---|---|
-|  |  |  |  |  |
-
-## B3. Team eval cases
-
-List the 10 cases added to `data/eval_group.json`:
-
-- 5 single-turn
-- 5 multi-turn
-
-This section is for the mandatory team-authored eval set. Optional built-ins do
-not belong here.
-
-File template để trống có chủ đích; nhóm phải tự thiết kế đủ 10 case.
-
-| Case ID | What It Tests | Expected Tool/Behavior | Result |
-|---|---|---|---|
-|  |  |  |  |
-
-## B4. Live chat evidence
-
-Use `transcripts/*.transcript.json`.
-
-| Scenario/Turn | Version | Tool Calls + Args | Transcript/Run | Outcome |
-|---|---|---|---|---|
-|  |  |  |  |  |
-
-## B5. Tool capability evidence
-
-Phân loại rõ tool mới bắt buộc, optional built-in và tool đủ điều kiện bonus. Chỉ ghi Telegram/PDF nếu nhóm thực sự dùng; base report không cần chúng.
-
-UI is core deliverable, not bonus. Do not list it here.
-
-| Category | Evidence File | What Worked | Risk / Guardrail |
-|---|---|---|---|
-| Must-have: tool mới đầu tiên |  |  |  |
-| Optional built-in |  |  |  |
-| Bonus: tool mới thứ 4 trở đi |  |  |  |
-
-## B6. Reflection
-
-- Which fixes belonged in `system_prompt.md`?
-- Which fixes belonged in `tools.yaml`?
-- Which failure needed manual review instead of automatic grading?
-- What would you improve next?
+```json
+// Placeholder for transcript log showing successful Calculator or Confirm logic
+```
