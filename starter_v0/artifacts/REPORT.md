@@ -2,7 +2,7 @@
 
 ## Thông tin thành viên nhóm A2
 
-"Nguyễn Mai Nhật Anh - 2A202601826
+Nguyễn Mai Nhật Anh - 2A202601826
 
 Nguyễn Tuấn Hùng - 2A202601194
 
