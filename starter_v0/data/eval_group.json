@@ -108,6 +108,26 @@
       "failure_type": "missing_info",
       "expect": {"tool_calls": [{"name": "fetch", "args": {"url": "https://github.com"}}]},
       "metadata": {"skill": "multiturn_url", "difficulty": "medium", "what_it_tests": "Fetch url sau khi user cung cấp."}
+    },
+    {
+      "id": "T07_weather_basic",
+      "phase": "B", "suite": "group",
+      "query": "Thời tiết Hà Nội hôm nay thế nào?",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "weather", "args": {"location": "Hà Nội"}}]},
+      "metadata": {"skill": "weather_basic", "difficulty": "easy", "what_it_tests": "Lấy thông tin thời tiết."}
+    },
+    {
+      "id": "M06_multiturn_weather",
+      "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Cho mình biết thời tiết hôm nay được không?"},
+        {"role": "assistant", "content": "Bạn muốn xem thời tiết ở đâu?"},
+        {"role": "user", "content": "New York"}
+      ],
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "weather", "args": {"location": "New York"}}]},
+      "metadata": {"skill": "multiturn_weather", "difficulty": "medium", "what_it_tests": "Hỏi thời tiết cần phải hỏi lại địa điểm nếu thiếu."}
     }
   ]
 }

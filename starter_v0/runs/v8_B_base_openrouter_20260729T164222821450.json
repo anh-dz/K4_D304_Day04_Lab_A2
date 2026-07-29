@@ -1,0 +1,999 @@
+{
+  "run_id": "v8_B_base_openrouter_20260729T164222821450",
+  "version": "v8",
+  "artifact_version": "v8+p6b1d29be1a2a+t3ed20ae756b4",
+  "prompt_hash": "6b1d29be1a2a58c7744e6f5add37cab48c46fee7e6a1411b4bdbd86730b1eeb6",
+  "tools_hash": "3ed20ae756b4440921d57bb62f8a324faf9f0cb785dfb29f8ebe948ba3aa5c9f",
+  "phase": "B",
+  "suite": "base",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "C:\\Users\\Admin\\Desktop\\Day01\\K4_D304_Day04_Lab_A2\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\Admin\\Desktop\\Day01\\K4_D304_Day04_Lab_A2\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "10 eval cases (5 single, 5 multi-turn) của nhóm.",
+  "generated_at": "2026-07-29T16:42:22",
+  "summary": {
+    "total_cases": 13,
+    "measured_cases": 13,
+    "provider_error_cases": 0,
+    "passed_cases": 13,
+    "case_accuracy": 1.0,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "T01_calc_basic",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "math_basic",
+        "difficulty": "easy",
+        "what_it_tests": "Dùng calculator để tính phần trăm."
+      },
+      "input": "Tính giúp mình 15% của 25000 là bao nhiêu?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "0.15 * 25000"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "0.15 * 25000"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "0.15 * 25000"
+          },
+          "result": {
+            "tool": "calculator",
+            "expression": "0.15 * 25000",
+            "result": 3750.0,
+            "error": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "T02_calc_math_func",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "math_func",
+        "difficulty": "easy",
+        "what_it_tests": "Dùng calculator với hàm math.sqrt."
+      },
+      "input": "Tính căn bậc hai của 144",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "math.sqrt(144)"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "math.sqrt(144)"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "math.sqrt(144)"
+          },
+          "result": {
+            "tool": "calculator",
+            "expression": "math.sqrt(144)",
+            "result": 12.0,
+            "error": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "T03_timeline_wrong_name",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "unknown_handle",
+        "difficulty": "medium",
+        "what_it_tests": "Người nổi tiếng không có trong danh mục handle_lookup -> phải tra cứu qua tool (found=false) trước khi clarify, không tự đoán handle."
+      },
+      "input": "Tweet mới nhất của Taylor Swift",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "handle_lookup",
+            "args": {
+              "display_name": "Taylor Swift"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "handle_lookup",
+            "args": {
+              "display_name": "Taylor Swift"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "handle_lookup",
+          "args": {
+            "display_name": "Taylor Swift"
+          },
+          "result": {
+            "tool": "resolve_handle",
+            "display_name": "Taylor Swift",
+            "handle": null,
+            "found": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "T04_send_without_confirm",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_send",
+        "difficulty": "medium",
+        "what_it_tests": "Hành động đăng bài -> clarify yes_no trước khi gọi send."
+      },
+      "input": "Đăng tin nhắn 'Xin chào thế giới' lên nhóm giúp mình.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có chắc chắn muốn đăng tin nhắn 'Xin chào thế giới' lên nhóm không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có chắc chắn muốn đăng tin nhắn 'Xin chào thế giới' lên nhóm không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có chắc chắn muốn đăng tin nhắn 'Xin chào thế giới' lên nhóm không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "T05_search_topic_top",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "search_top",
+        "difficulty": "medium",
+        "what_it_tests": "Tìm bài đăng được quan tâm nhất -> social_search với search_type=Top."
+      },
+      "input": "Tìm những bài đăng được quan tâm nhất về Iphone 16 trên mạng xã hội",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Iphone 16",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Iphone 16",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "Iphone 16",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "query": "Iphone 16",
+            "search_type": "Top",
+            "items": [
+              {
+                "title": "iPhone users from the 16 upwards ",
+                "summary": "iPhone users from the 16 upwards \nHow often do you use your camera control button?? https://t.co/ZOYqRDqZe3",
+                "url": "https://x.com/_Defijohn/status/2082383705092366777",
+                "source": "@_Defijohn",
+                "date": "Wed Jul 29 08:32:18 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 1,
+                  "views": "12"
+                }
+              },
+              {
+                "title": "Hot and Sweet giveaway deal",
+                "summary": "Hot and Sweet giveaway deal\n\n16pro max 256gb eSIM unlocked IDM 91BH *_N780,000*_\n\n#Kennismith https://t.co/pHYrgufk7R",
+                "url": "https://x.com/relish_sweetboi/status/2082391730289017147",
+                "source": "@relish_sweetboi",
+                "date": "Wed Jul 29 09:04:12 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "37"
+                }
+              },
+              {
+                "title": "iPhone || Foreign Used || Excellent Condition || Available 🔥 ",
+                "summary": "iPhone || Foreign Used || Excellent Condition || Available 🔥 \n\nXR 128GB - 205,000\nXR 256GB - 230,000\n\n11 128GB - 240,000\n11 256GB - 260,000\n11 Pro 256GB - 295,000\n11 Pro Max 256GB - 330,000\n\n12 128GB - 285,000\n12 256GB - 300,000\n12 Pro 128GB - 355,000\n12 Pro 256GB - 370,000\n12 Pro Max 128GB - 430,000\n12 Pro Max 256GB - 455,000\n12 Pro Max 512GB - 490,000\n\n13 128GB - 360,000\n13 256GB - 385,000\n13 Pro 128GB - 480,000\n\n14 128GB - 420,000\n14 256GB - 460,000\n14 Plus 128GB - 460,000\n14 Plus 256GB - 495,000\n\n15 128GB - 590,000\n15 256GB - 650,000\n15 Plus 128GB - 650,000\n15 Pro Max 256GB - 930,000\n15 Pro Max 512GB - 980,000\n15 Pro Max 1TB - 1,040,000\n\n16 128GB - 750,000\n16 Plus 128GB - 830,000\n16  Plus 256GB - 940,000\n\nNationwide Delivery \n\nKindly call/whatsapp: 09134447334\n\nShop 1A, (First Floor) Mokland Plaza\n3-9, Olu Koleosho Street, Off Simbiat Abiola Rd, Computer Village, Ikeja, Lagos.\n\nLandmark: Purch on Medical Road",
+                "url": "https://x.com/Hatzgadgets/status/2082389389401878698",
+                "source": "@Hatzgadgets",
+                "date": "Wed Jul 29 08:54:54 +0000 2026",
+                "metrics": {
+                  "favorites": 5,
+                  "retweets": 1,
+                  "views": "727"
+                }
+              },
+              {
+                "title": "Quick deal🔥🔥🔥",
+                "summary": "Quick deal🔥🔥🔥\n\nOpen box iPhone 16 256GB physical plus eSIM battery health: Normal (100%)\nPrice: 950,000 https://t.co/hCoKv605zS",
+                "url": "https://x.com/Aderealnigeria/status/2082392487037903117",
+                "source": "@Aderealnigeria",
+                "date": "Wed Jul 29 09:07:12 +0000 2026",
+                "metrics": {
+                  "favorites": 1,
+                  "retweets": 0,
+                  "views": "20"
+                }
+              },
+              {
+                "title": "List of all iPhones ever produced ",
+                "summary": "List of all iPhones ever produced \n\niPhone 17e 17 pro max 17 pro Air & 17\niPhone 16 pro max 16 pro 16 plus 16 & 16e\niPhone 15 pro max 15 pro 15 plus & 15\niPhone 14 Pro Max 14 pro 14 plus & 14\niPhone 13 Pro Max 13 pro 13 & 13 mini \niPhone SE 3rd gen 12 Pro Max 12 pro 12 & mini\niPhone 11 Pro Max 11 pro & 11  \niPhone XS Max xs xr & x \niPhone 8 plus 8 7 plus & 7 \niPhone 6s plus 6s 6 plus & 6 \niPhone 5 5c & 5s \niPhone 4 & 4s \niPhone 3g & 3GS \niPhone 1",
+                "url": "https://x.com/EmzyGadgets/status/2080916262595465335",
+                "source": "@EmzyGadgets",
+                "date": "Sat Jul 25 07:21:13 +0000 2026",
+                "metrics": {
+                  "favorites": 32,
+                  "retweets": 6,
+                  "views": "4283"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "T06_handle_lookup_known",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "handle_resolution",
+        "difficulty": "easy",
+        "what_it_tests": "Tên nổi tiếng có trong danh mục handle_lookup -> phải tra cứu qua tool thay vì tự đoán/hardcode trong prompt."
+      },
+      "input": "Tweet mới nhất của Bill Gates",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "handle_lookup",
+            "args": {
+              "display_name": "Bill Gates"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "handle_lookup",
+            "args": {
+              "display_name": "Bill Gates"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "handle_lookup",
+          "args": {
+            "display_name": "Bill Gates"
+          },
+          "result": {
+            "tool": "resolve_handle",
+            "display_name": "Bill Gates",
+            "handle": "BillGates",
+            "found": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "M01_multiturn_calc",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_calc",
+        "difficulty": "hard",
+        "what_it_tests": "Carry over thông tin để tính diện tích hình tròn r=5."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tính giúp mình diện tích hình tròn"
+        },
+        {
+          "role": "user",
+          "content": "Bán kính là 5 nhé"
+        },
+        {
+          "role": "user",
+          "content": "Dùng số pi trong hàm math luôn"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "math.pi * 5**2"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "calculator",
+            "args": {
+              "expression": "math.pi * 5**2"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "math.pi * 5**2"
+          },
+          "result": {
+            "tool": "calculator",
+            "expression": "math.pi * 5**2",
+            "result": 78.53981633974483,
+            "error": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "M02_multiturn_send",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_confirmed_send",
+        "difficulty": "hard",
+        "what_it_tests": "Đã có xác nhận 'Có' ở turn trước -> tiến hành gọi send với confirmed=true."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mình muốn đăng thông báo: Hôm nay nghỉ họp"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn có chắc chắn muốn đăng thông báo này không?"
+        },
+        {
+          "role": "user",
+          "content": "Có, gửi đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "Hôm nay nghỉ họp",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "text": "Hôm nay nghỉ họp",
+              "confirmed": true
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "send",
+          "args": {
+            "text": "Hôm nay nghỉ họp",
+            "confirmed": true
+          },
+          "result": {
+            "tool": "send_telegram",
+            "error": "RuntimeError",
+            "message": "Missing TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID env var"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M03_multiturn_lookup_time",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_lookup",
+        "difficulty": "medium",
+        "what_it_tests": "Cập nhật timeframe=day sau khi user cung cấp thêm thông tin."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin về giá vàng giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ lấy tin hôm nay thôi nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "giá vàng",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "giá vàng",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "giá vàng",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "giá vàng",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Giá vàng hôm nay (16-6): Tăng sốc - Báo và Phát thanh, Truyền hình Lạng Sơn - Báo và Phát thanh, Truyền hình Lạng Sơn",
+                "url": "https://baolangson.vn/gia-vang-hom-nay-16-6-tang-soc-5095927.html",
+                "source": "baolangson.vn",
+                "summary": "Giá vàng thế giới hôm nay\n\nGiá vàng thế giới hôm nay được giao dịch ở mức 4.311,7 USD/ounce. Giá vàng thế giới nhìn chung có tăng 0,78% trong 24 giờ qua, tương ứng với tăng 33,26 USD/ounce.\n\nVới giá vàng miếng trong nước giảm và giá vàng thế giới niêm yết tại Kitco ở mức 4.311,7 USD/ounce (tương đương 137,3 triệu đồng/lượng quy đổi theo tỷ giá Vietcombank, chưa thuế, phí), chênh lệch giữa giá vàng trong nước và thế giới khoảng 13,2 triệu đồng/lượng. [...] In\n\nTheo dõi trên \n\n## Giá vàng hôm nay (16-6): Giao dịch vàng miếng SJC của các thương hiệu đã tăng mạnh trong 24 giờ qua, với mức cao nhất là 4 triệu đồng/lượng ở chiều mua vào, đưa giá vàng trở lại ngưỡng 150,5 triệu đồng/lượng ở chiều bán ra.\n\nGiá vàng miếng trong nước hôm nay\n\nCụ thể, vàng miếng thương hiệu SJC, Bảo Tín Mạnh Hải, PNJ, DOJI và Phú Quý cùng mua vào 148 triệu đồng/lượng, tăng 4 triệu đồng/lượng; bán ra 150,5 triệu đồng/lượng, tăng 3,5 triệu đồng/lượng so với rạng sáng qua. [...] Mặc dù giá vàng đã phục hồi đáng kể so với mức thấp kỷ lục hồi tuần trước ở mức gần 4.000 USD/ounce, một số nhà phn tích cảnh báo rằng kim loại quý này vẫn chưa thoát khỏi khó khăn. Trong một cuộc phỏng vấn gần đy với Kitco News, Michele Schneider, Chiến lược gia trưởng thị trường tại MarketGauge, cho biết khả năng giữ vững mức hỗ trợ trên 4.000 USD/ounce của vàng cho phép các nhà đầu tư thử nghiệm thị trường với các vị thế nhỏ.",
+                "score": 0.8055255
+              },
+              {
+                "title": "Giá vàng hôm nay (chiều 29-7): Tiếp tục giảm",
+                "url": "https://www.qdnd.vn/kinh-te/tin-tuc/gia-vang-hom-nay-chieu-29-7-tiep-tuc-giam-1051251",
+                "source": "qdnd.vn",
+                "summary": "Giá vàng hôm nay (chiều 29-7): Giá vàng miếng có mức giảm chung là 400.000 đồng lượng ở cả hai chiều mua vào và bán ra.",
+                "score": 0.7352811
+              },
+              {
+                "title": "Gold price update morning of July 29: Simultaneous decline",
+                "url": "https://news.laodong.vn/tien-te-dau-tu/cap-nhat-gia-vang-sang-297-dong-loat-sut-giam-1741972.ldo",
+                "source": "news.laodong.vn",
+                "summary": "SJC gold bar and plain ring prices at some business units. Unit: VND/tael. Table: AI\n\nWorld gold price\n\nAt 10:42 PM on July 28, the world gold price was listed around the threshold of 4,038 USD/ounce, up 35.5 USD.\n\nDiễn biến giá vàng thế giới những phiên giao dịch gần đy. Biểu đồ: AI\n\nDevelopments in world gold prices in recent trading sessions. Chart: AI\n\nGold price forecast [...] In the latest trading session, spot gold prices retreated to around 4,031 USD/ounce, down more than 1% in the session. The precious metal currently still maintains the important support zone of 4,000 USD/ounce, but has not been able to make a breakthrough back to the resistance zone of 4,150-4,200 USD/ounce. [...] Giá vàng nhẫn trơn tại một số đơn vị kinh doanh. Đơn vị: đồng/lượng. Biểu đồ: AI\n\nPrice of plain gold rings at some business units. Unit: VND/tael. Chart: AI\n\nBao Tin Minh Chau listed the price of gold rings at 138.1-142 million VND/tael (buying - selling), down 2 million VND/tael in both buying and selling directions. The difference between buying and selling prices is at 3.9 million VND/tael.\n\nGiá vàng miếng SJC và nhẫn trơn tại một số đơn vị kinh doanh. Đơn vị: đồng/lượng. Bảng: AI",
+                "score": 0.7300017
+              },
+              {
+                "title": "Đọc nhanh 29-7: Giá dầu vọt lên, giá vàng giảm tiếp - Tuổi Trẻ Online",
+                "url": "https://tuoitre.vn/doc-nhanh-29-7-gia-dau-vot-len-gia-vang-giam-tiep-vincom-retail-thay-chu-tich-100260729084358167.htm",
+                "source": "tuoitre.vn",
+                "summary": "Diễn biến giảm nhẹ của đồng USD diễn ra trong bối cảnh thị trường đang hướng sự chú ý tới cuộc họp chính sách tiền tệ của Fed, dự kiến diễn ra trong hai ngày 28 và 29-7.\n\n- Dù suy giảm theo phiên, nhưng nếu tính chung 1 tuần trở lại đây, DXY vẫn tăng 0,25%. Điều này gây cản trở sự phục hồi bền vững của giá vàng. Giá vàng giao ngay sáng nay giảm 59 USD, trở về mốc 4.016 USD/ounce.\n\nGiá bạc cũng giảm so với cùng thời điểm hôm qua, lùi về mốc 57,2 USD/ounce. [...] Giá dầu thế giới bật tăng mạnh trong sáng 29-7 (giờ Việt Nam). Giá vàng giao ngay sáng nay giảm 59 USD, trở về mốc 4.016 USD/ounce. Trong nước, nhiều tin tức khối doanh nghiệp niêm yết đáng chú ý...\n\nĐọc nhanh 29-7: Giá vàng giảm tiếp; Vincom Retail thay Chủ tịch - Ảnh 1.\n\nMua bán vàng nữ trang tại TP.HCM - Ảnh: T.T.D.\n\n## Giá dầu lại tăng, giá vàng đi xuống [...] Chứng khoán Mỹ phân hóa trong phiên 28-7 khi dòng tiền tiếp tục dịch chuyển từ nhóm cổ phiếu bán dẫn sang các ngành truyền thống, trong bối cảnh giá dầu giảm mạnh và nhiều doanh nghiệp lớn công bố kết quả kinh doanh khả quan.\n\nKết phiên, Dow Jones tăng 1,03% lên 52.747,32 điểm, S&P 500 nhích 0,22% lên 7.428,78 điểm, trong khi Nasdaq giảm 0,22% xuống 24.876,91 điểm do áp lực bán ở nhóm công nghệ.",
+                "score": 0.67501575
+              },
+              {
+                "title": "Giới phân tích cắt giảm dự báo giá vàng, ngân hàng trung ương vẫn là động lực - VnEconomy",
+                "url": "https://vneconomy.vn/gioi-phan-tich-cat-giam-manh-du-bao-gia-vang.htm",
+                "source": "vneconomy.vn",
+                "summary": "Cuộc khảo sát có sự tham gia của 29 nhà phân tích và nhà giao dịch đưa ra con số trung vị (median) cho dự báo giá vàng bình quân năm 2026 là 4.509 USD/oz. Trong cuộc khảo sát cách đây 3 tháng, mức dự báo trung vị là 4.916 USD/oz. Đây cũng là lần đầu tiên trong 11 tháng qua, khảo sát của Reuters cho thấy dự báo giá vàng bị cắt giảm.\n\nVề năm 2027, khảo sát cho rằng mức bình quân của giá vàng sẽ đạt 4.610 USD/oz, giảm mạnh so với mức 5.100 USD/oz đưa ra trong lần khảo sát trước. [...] Dự báo này được đưa ra trong bối cảnh giá vàng đã giảm khoảng 30% so với mức kỷ lục gần 5.600 USD/oz thiết lập vào cuối tháng 1 năm nay, về vùng 4.000 USD/oz. Cuộc chiến tranh giữa Mỹ và Iran đẩy giá dầu thô tăng cao, dẫn tới áp lực lạm phát tăng và kỳ vọng Cục Dự trữ Liên bang Mỹ (Fed) tăng lãi suất là nguyên nhân chính khiến vàng trượt giá. [...] “Sự cải thiện nhu cầu công nghiệp đối với bạc, nhờ trí tuệ nhân tạo (AI), ô tô điện (EV), và năng lượng mặt trời, sẽ mang lại cho giá bạc sự hỗ trợ từ mức giá 40 USD/oz trở lại”, nhà phân tích Rhona O’Connell của công ty StoneX nhận xét.\n\nGoogle News\nFacebook\nTwitter\nEmail\nCopy Link\nChia sẻ\n\n## Bài liên quan\n\nGiá vàng tụt về gần mức 4.000 USD/oz, SPDR Gold Trust bán ròng\n\n### Giá vàng tụt về gần mức 4.000 USD/oz, SPDR Gold Trust bán ròng\n\nTrung Quốc nhập khẩu vàng nhiều nhất hơn 2 năm",
+                "score": 0.66569364
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M04_multiturn_change_mind",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_change_mind",
+        "difficulty": "hard",
+        "what_it_tests": "Đổi handle từ Sam Altman sang Andrej Karpathy."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Xem Sam Altman vừa tweet gì"
+        },
+        {
+          "role": "user",
+          "content": "Thôi khoan, lấy của Andrej Karpathy đi"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "karpathy"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "karpathy",
+            "items": [
+              {
+                "title": "One pattern I find useful for working with LLMs is a nice long ramble session. Sometimes the LLM needs more bits to unde",
+                "summary": "One pattern I find useful for working with LLMs is a nice long ramble session. Sometimes the LLM needs more bits to understand what you're trying to achieve, but you're too lazy to type them. In these cases I like to lean back, switch to /voice and just ramble for like 10 minutes, total mess, anything goes, full stream of consciousness. Sometimes I declare it up top, something like \"switching to speech recognition sorry for any typos...\". Sometimes I turn it into a small interview of a few turns. But I find that the LLMs are somehow very good at reconstructing long incoherent rambles and often their echo of your own tangle of thoughts comes out quite a bit cleaner than what you started with. The result is that you improve the mind meld and have to correct things less from that point on.",
+                "url": "https://x.com/karpathy/status/2079610838143623371",
+                "source": "@karpathy",
+                "date": "Tue Jul 21 16:53:55 +0000 2026",
+                "metrics": {
+                  "favorites": 48657,
+                  "retweets": 4065,
+                  "views": "3901341"
+                }
+              },
+              {
+                "title": "RT @jarredsumner: Rewriting Bun in Rust",
+                "summary": "RT @jarredsumner: Rewriting Bun in Rust\n\nhttps://t.co/Rl8bcaxBFc",
+                "url": "https://x.com/karpathy/status/2075266731170537506",
+                "source": "@karpathy",
+                "date": "Thu Jul 09 17:11:59 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1094,
+                  "views": "40706"
+                }
+              },
+              {
+                "title": "RT @petergostev: I spent a LOT of time through the hardest 3D prompts at Fable, it is a 45 min video, but I have 60+ ver",
+                "summary": "RT @petergostev: I spent a LOT of time through the hardest 3D prompts at Fable, it is a 45 min video, but I have 60+ very cool demos for yo…",
+                "url": "https://x.com/karpathy/status/2073496962566164990",
+                "source": "@karpathy",
+                "date": "Sat Jul 04 19:59:34 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 166,
+                  "views": "40696"
+                }
+              },
+              {
+                "title": "RT @Etched: We're coming out of stealth.",
+                "summary": "RT @Etched: We're coming out of stealth.\n\nWe've built our first racks after a successful A0 tapeout, $1B+ in customer contracts, and $800m…",
+                "url": "https://x.com/karpathy/status/2072051876816945486",
+                "source": "@karpathy",
+                "date": "Tue Jun 30 20:17:18 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 943,
+                  "views": "41084"
+                }
+              },
+              {
+                "title": "RT @EngramLab: https://t.co/CGIef5lIBI",
+                "summary": "RT @EngramLab: https://t.co/CGIef5lIBI",
+                "url": "https://x.com/karpathy/status/2069579404163031082",
+                "source": "@karpathy",
+                "date": "Wed Jun 24 00:32:35 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 248,
+                  "views": "39811"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M05_multiturn_clarify_url",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_url",
+        "difficulty": "medium",
+        "what_it_tests": "Fetch url sau khi user cung cấp."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt link này giúp mình"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn hãy cung cấp link cụ thể nhé."
+        },
+        {
+          "role": "user",
+          "content": "https://github.com"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://github.com"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://github.com"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://github.com"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://github.com",
+            "items": [
+              {
+                "title": "GitHub · Change is constant. GitHub keeps you ahead. · GitHub",
+                "url": "https://github.com",
+                "source": "github.com",
+                "summary": "[Skip to content](https://github.com/#start-of-content)\n\nYou signed in with another tab or window. [Reload](https://github.com/) to refresh your session.You signed out in another tab or window. [Reload](https://github.com/) to refresh your session.You switched accounts on another tab or window. [Reload](https://github.com/) to refresh your session.Dismiss alert\n\n{{ message }}\n\n# The future of building happens together\n\nTools and trends evolve, but collaboration endures. With GitHub, developers, agents, and code come together on one platform.\n\nEnter your email\n\nSign up for GitHub\n\n[Try GitHub Copilot](https://github.com/github-copilot/pro)\n\n## GitHub features\n\nA demonstration animation of a code editor using GitHub Copilot Chat, where the user requests GitHub Copilot to refactor duplicated logic and extract it into a reusable function for a given code snippet.\n\nCodePlanCollaborateAutomateSecure\n\nCode\n\nWrite, test, and fix code quickly with GitHub Copilot, from simple boilerplate to complex features.\n\n## GitHub customers\n\nAmerican AirlinesDuolingoErnst and YoungFordInfoSysMercado LibreMercedes-BenzShopifyPhilipsSociété GénéraleSpotifyVodafone\n\nAmerican AirlinesDuolingoErnst and YoungFordInfoSysMercado LibreMercedes-BenzShopifyPhilipsSociété GénéraleSpotifyVodafone\n\n![](https://github.githubassets.com/assets/particles-170bd1fd231f4669.png)\n\nA Copilot chat window with the 'Ask' mode enabled. The user switches from 'Ask' mode to 'Agent' mode from a dropdown menu, then sends the prompt 'Update the website to allow searching for running races by name.' Copilot analyzes the codebase, then explains the required edits for three files before generating them. Copilot then confirms completion and summarizes the implemented changes for the new functionality allowing users to search races by name and view paginated, filtered results.\n\n### Your AI partner everywhere. Copilot is ready to work with you at each step of the software development lifecycle.\n\n[Explore GitHub Copilot](https://github.com/features/copilot)\n\n![Duolingo](https://images.ctfassets.net/8aevphvgewt8/g1XhuDG7foMyNWIEIpGJj/b40a790b854d0803704deb7905b1bd82/logo-duolingo-14477f9e54a6.svg)\n\nDuolingo boosts developer speed by 25% with GitHub Copilot\n\n[Read customer story](https://github.com/customer-stories/duolingo)\n\n![Gartner](https://images.ctfassets.net/8aevphvgewt8/6Qr8Snm4JceoMFRJhapgFa/802ded1d2c486a9d0a4c073d9f8f38f4/logo-gartner-aa8c2e452b64.svg)\n\n2025 Gartner® Magic Quadrant™ for AI Code Assistants\n\n[Read industry report](https://www.gartner.com/reprints/?id=1-2LVTG7RP&ct=250915&st=sb)\n\n![](https://images.ctfassets.net/8aevphvgewt8/1Dt1ncaR6ZM4dQvknFzfBI/e5c2092be5bd53881622eced4fd37564/accordion-1-ce487d44c0bf.webp)![](https://images.ctfassets.net/8aevphvgewt8/1uXZYDy7dMcH9QwxuAU06F/1cb167cc60d725b8cf7089faf9a4ed06/accordion-2-730955545f07.webp)![](https://images.ctfassets.net/8aevphvgewt8/3xzVZaJhqo3B62R8NeHjX2/e37c81e4f26e9dac2aff1f23a0243087/accordion-3-52ca331d22ea.webp)![](https://images.ctfassets.net/8aevphvgewt8/3cgNgdKFqflI27vyDh4Gpa/c459dc8690133e7663b8db2626cf2045/accordion-4-a26744b70ff7.webp)\n\n### Automate your path to production\n\nShip faster with secure, reliable CI/CD.\n\n[Explore GitHub Actions](https://github.com/features/actions)\n\n### Code instantly from anywhere\n\nLaunch a full, cloud-based development environment in seconds.\n\n[Explore GitHub Codespaces](https://github.com/features/codespaces)\n\n### Keep momentum on the go\n\nManage projects and assign tasks to Copilot, all from your mobile device.\n\n[Explore GitHub Mobile](https://github.com/mobile)\n\n### Shape your toolchain\n\nExtend your stack with apps, actions, and AI models.\n\n[Explore GitHub Marketplace](https://github.com/marketplace)\n\n![](https://github.githubassets.com/assets/particles-170bd1fd231f4669.png)\n\n### Apply fixes in seconds. Spend less time debugging and more time building features with Copilot Autofix.\n\n[Explore GitHub Advanced Security](https://github.com/security/advanced-security)\n\n![Cop"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "T07_weather_basic",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "weather_basic",
+        "difficulty": "easy",
+        "what_it_tests": "Lấy thông tin thời tiết."
+      },
+      "input": "Thời tiết Hà Nội hôm nay thế nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Hà Nội"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "Hà Nội"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather",
+          "args": {
+            "location": "Hà Nội"
+          },
+          "result": {
+            "tool": "get_weather",
+            "location": "Hà Nội",
+            "temperature": "25°C",
+            "condition": "Sunny",
+            "humidity": "60%",
+            "forecast": "Clear skies throughout the day."
+          }
+        }
+      ]
+    },
+    {
+      "id": "M06_multiturn_weather",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_weather",
+        "difficulty": "medium",
+        "what_it_tests": "Hỏi thời tiết cần phải hỏi lại địa điểm nếu thiếu."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Cho mình biết thời tiết hôm nay được không?"
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn muốn xem thời tiết ở đâu?"
+        },
+        {
+          "role": "user",
+          "content": "New York"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "New York"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "weather",
+            "args": {
+              "location": "New York"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "weather",
+          "args": {
+            "location": "New York"
+          },
+          "result": {
+            "tool": "get_weather",
+            "location": "New York",
+            "temperature": "25°C",
+            "condition": "Sunny",
+            "humidity": "60%",
+            "forecast": "Clear skies throughout the day."
+          }
+        }
+      ]
+    }
+  ]
+}

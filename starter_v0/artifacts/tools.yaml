@@ -124,3 +124,11 @@ tools:
       properties:
         display_name: {type: string, default: "", description: "Tên hiển thị đầy đủ, ví dụ 'Bill Gates'."}
       required: [display_name]
+
+  - name: weather
+    description: "Lấy thông tin thời tiết hiện tại của một địa điểm cụ thể."
+    parameters:
+      type: object
+      properties:
+        location: {type: string, description: "Tên địa điểm cần xem thời tiết, ví dụ 'Hà Nội'."}
+      required: [location]
